@@ -5,6 +5,7 @@ Pipeline for annotating variants in .vcf files using Variant Effect Predictor (V
 ```
 git clone https://github.com/HealthML/Nextflow-pipeline.git
 cd Nextflow-pipeline
+git checkout dev_nf
 ```
 
 # Nextflow
