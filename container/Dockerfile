@@ -1,7 +1,7 @@
 # NGS580 container for making reports with R 3.4.3
 FROM ubuntu:18.04
 
-MAINTAINER Stephen M. Kelly
+MAINTAINER Alva James
 
 # ~~~~~ BASIC SETUP ~~~~~ #
 RUN apt-get update && \
