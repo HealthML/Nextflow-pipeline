@@ -29,6 +29,11 @@ Channel.fromPath( file(params.ref_dict) )
     ref_dict2
 }
 
+Channel.fromPath( file(params.gtf) )
+.into{ gtf;
+    gtf2
+}
+
 Channel.fromPath("variants/**.vcf").map { item ->
     def sampleID = "${item.getName()}".replaceFirst(/.vcf$/, "")
     return([sampleID, item])
@@ -54,19 +59,6 @@ process download_ref {
         tar xzf homo_sapiens_vep_99_GRCh38.tar.gz
         )
     """
-    // gencode	GENCODE 19
-    // HGMD-PUBLIC	20174
-    // genebuild	2011-04
-    // assembly	GRCh37.p13
-    // polyphen	2.2.2
-    // gnomAD	r2.1
-    // ESP	20141103
-    // dbSNP	151
-    // sift	sift5.2.2
-    // ClinVar	201810
-    // 1000genomes	phase3
-    // regbuild	1.0
-    // COSMIC	86
 }
 vep_ref_dir.map{ item ->
     def assembly = "GRCh38"
@@ -79,10 +71,9 @@ process vep {
     publishDir "${params.outputDir}/VEP/raw", mode: 'copy'
 
     input:
-    set val(sampleID), file(vcf), file(ref_dir), val(assembly), file(refFasta), file(refFai), file(refDict) from input_vcfs.combine(vep_ref_dir_assembly)
+    set val(sampleID), file(vcf), file(ref_dir), val(assembly), file(refFasta) from input_vcfs.combine(vep_ref_dir_assembly)
         .combine(ref_fa)
-        .combine(ref_fai)
-        .combine(ref_dict)
+ 
 
     output:
     set val(sampleID), file("${output_file}") into vcf_annotated
@@ -99,14 +90,8 @@ process vep {
     --dir "${ref_dir}" \
     --assembly "${assembly}" \
     --fasta "${refFasta}" \
-    --hgvs \
-    --hgvsg \
-    --protein \
-    --symbol \
-    --ccds \
-    --canonical \
-    --biotype \
-    --pubmed \
+    --force_overwrite \
+    --species homo_sapiens \
     -i "${vcf}" \
     --format vcf \
     -o "${output_file}" \
