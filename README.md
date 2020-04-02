@@ -21,8 +21,9 @@ make docker-build
 
 # Reference Files
 
-The pipeline downloads automatically hg38 fasta file. However, for the current pipeline I am using reference genome which I manually downloaded and indexed (`.fai`) and converted to `.dict`. And later provided these reference files as the command line arguments.
-In addition, to that I have used the `GTF` file as one of the paramaters for the VEP tool.
+The pipeline downloads automatically hg38 fasta file. However, for the current pipeline I am using reference genome which I manually downloaded and indexed (`.fai`). And later provided these reference files as the command line arguments.
+
+`./nextflow run main.nf --ref_fa /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa`
 
 
 
