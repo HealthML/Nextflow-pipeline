@@ -26,7 +26,8 @@ The pipeline downloads automatically hg38 fasta file. However, for the current p
 `./nextflow run main.nf --ref_fa /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa`
 If you can access the VM server and the above mentioned folder, there is index for the reference genome.
 
-Otherwise, you can also run the whole pipeline by using following one liner,
+Otherwise, you can also run the whole pipeline by using the following one liner,
+
 `./nextflow run main.nf`
 
 
