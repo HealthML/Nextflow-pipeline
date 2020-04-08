@@ -24,6 +24,11 @@ Channel.fromPath( file(params.ref_fai) )
 ref_fai2
 }
 
+Channel.fromPath( file(params.gtf_tbi) )
+.into{ gtf_tbi;
+gtf_tbi2
+}
+
 Channel.fromPath( file(params.ref_dict) )
 .into{ ref_dict;
     ref_dict2
@@ -71,8 +76,10 @@ process vep {
     publishDir "${params.outputDir}/VEP/raw", mode: 'copy'
 
     input:
-    set val(sampleID), file(vcf), file(ref_dir), val(assembly), file(refFasta) from input_vcfs.combine(vep_ref_dir_assembly)
+    set val(sampleID), file(vcf), file(ref_dir), val(assembly), file(refFasta),file(GTF),file(GTF_tbi) from input_vcfs.combine(vep_ref_dir_assembly)
         .combine(ref_fa)
+        .combine(gtf)
+        .combine(gtf_tbi)
  
 
     output:
@@ -90,6 +97,7 @@ process vep {
     --dir "${ref_dir}" \
     --assembly "${assembly}" \
     --fasta "${refFasta}" \
+    --gtf "${GTF}" \
     --force_overwrite \
     --species homo_sapiens \
     -i "${vcf}" \
