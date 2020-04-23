@@ -1,4 +1,5 @@
-params.outputDir = "output"
+params.outputDir = "/home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
+import java.nio.file.Paths
 
 // ~~~~~ START WORKFLOW ~~~~~ //
 log.info "~~~~~~~ VEP Pipeline ~~~~~~~"
@@ -39,6 +40,30 @@ Channel.fromPath( file(params.gtf) )
     gtf2
 }
 
+Channel
+    .fromPath("${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt", checkIfExists:true )
+    .ifEmpty { exit 1, "Fam file NOT found: ${params.fam}" }
+    //.println()
+    .set { fam_for_plink2 }
+
+//fam_for_plink2.subscribe { println it }
+
+bed = Paths.get("${params.plink_input}.bed").toString()
+bim = Paths.get("${params.plink_input}.bim").toString()
+fam = Paths.get("${params.plink_input}.fam").toString()
+
+params.pops = "ukb_SPB_50k_exome_seq"
+dir = params.plink_input
+
+Channel
+    .fromFilePairs("${params.plink_input}/ukb_SPB_50k_exome_seq.{bed,bim,fam}",size:3) {
+        file -> file.baseName
+    }
+    .filter { key, files -> key in params.pops }
+    .set { plink_data }
+
+// plink_data.subscribe { println "$it" }
+
 Channel.fromPath("variants/**.vcf").map { item ->
     def sampleID = "${item.getName()}".replaceFirst(/.vcf$/, "")
     return([sampleID, item])
@@ -70,6 +95,45 @@ vep_ref_dir.map{ item ->
     return([item, assembly])
 }.set{ vep_ref_dir_assembly }
 
+process pling_1 {
+    publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered", mode: 'copy'
+
+    input:
+    set pop, file(pl_files) from plink_data
+    output:
+    file "ukb_FE_50k_exome_seq_filtered.{bed,fam,bim}" into pling1_results
+
+    script:
+    output_file="ukb_FE_50k_exome_seq_filtered"
+
+     """
+        plink2 \
+        --bfile $pop \
+        --hwe 0.00001 \
+        --make-bed \
+        --out ${output_file} \
+     """
+}
+process pling_2 {
+    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf", mode: 'copy'
+
+    input:
+    file(pling1) from pling1_results
+    file(fam1) from fam_for_plink2
+
+    output:
+    file "ukb_FE_50k_exome_seq_filtered.vcf" into pling2_results
+
+    script:
+    output_file="ukb_FE_50k_exome_seq_filtered"
+
+     """
+     plink2 \
+     --bfile "${params.outputDir}/ukb_FE_50k_exome_seq_filtered/ukb_FE_50k_exome_seq_filtered" \
+     --keep-fam ${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt \
+     --recode vcf-iid bgz --out ${output_file}
+     """
+}
 process vep {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basic
     tag "${sampleID}"
