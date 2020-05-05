@@ -1,0 +1,6 @@
+.nextflow.log*
+timeline.html*
+trace*
+out*
+work/
+nextflow.html*

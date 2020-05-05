@@ -1,4 +1,4 @@
-params.outputDir = "/home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
+params.outputDir = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
 import java.nio.file.Paths
 
 // ~~~~~ START WORKFLOW ~~~~~ //

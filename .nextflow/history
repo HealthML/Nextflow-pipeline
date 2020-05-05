@@ -1,0 +1,9 @@
+2020-04-07 08:47:52	32m 44s	berserk_varahamihira	ERR	a87d507dbca1efaf4eedd46542f92167	79425320-9177-4095-97d1-1e72acfdf737	nextflow run main.nf
+2020-04-08 08:51:34	2.2s	sick_bartik	ERR	a87d507dbca1efaf4eedd46542f92167	35a8eecd-bbe4-444b-b260-f0f664840799	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-04-08 09:02:21	39.2s	serene_heisenberg	OK	a87d507dbca1efaf4eedd46542f92167	e94ce31e-5055-448f-a189-65a84ded2abf	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-04-08 15:07:43	8s	tiny_bardeen	ERR	a87d507dbca1efaf4eedd46542f92167	898beda9-56e2-4565-80cd-bb7a3f1f29eb	nextflow run main.nf
+2020-05-04 13:27:53	44.8s	tiny_hamilton	OK	a87d507dbca1efaf4eedd46542f92167	6a46b33a-2bdf-4c11-91dd-3a7c4408e835	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-04 13:34:53	-	wise_morse	-	9769bc246948076b55b1791180934d84	a4ce00b7-c202-40a7-8864-6edd74b28076	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-04 13:54:07	-	deadly_cantor	-	9769bc246948076b55b1791180934d84	355e2cb7-d1c2-4292-88e0-52923fd2f36d	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-04 13:56:48	39.6s	jovial_hamilton	ERR	317aefe65ffa124b4622c9b2af0671a7	e04c68ae-b085-4e38-a58a-385c099e1045	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-04 14:11:23	38.5s	kickass_tesla	ERR	317aefe65ffa124b4622c9b2af0671a7	18e337aa-997b-43cc-923d-6e702e4e8e87	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
