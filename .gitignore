@@ -4,3 +4,4 @@ trace*
 out*
 work/
 nextflow.html*
+.nextflow/*
