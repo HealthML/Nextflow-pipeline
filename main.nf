@@ -70,7 +70,7 @@ Channel.fromPath("variants/**.vcf").map { item ->
     return([sampleID, item])
 }.set { input_vcfs }
 
-/*
+
 process download_ref {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache
     // ftp://ftp.ensembl.org/pub/release-99/variation/indexed_vep_cache
@@ -98,7 +98,7 @@ vep_ref_dir.map{ item ->
     def assembly = "GRCh38"
     return([item, assembly])
 }.set{ vep_ref_dir_assembly }
-*/
+
 process pling_1 {
     publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
 

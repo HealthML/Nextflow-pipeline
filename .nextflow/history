@@ -31,3 +31,4 @@
 2020-05-12 07:37:03	19.6s	clever_becquerel	OK	53ffcde3174856a7eb7cb9337285cca6	73f281e4-42eb-429f-ba03-5ef48fac836a	nextflow run main.nf
 2020-05-12 08:24:07	42m 15s	elated_stonebraker	OK	5076fe500c3af3b9e6f64eef9c957ab4	8412d36b-7296-4705-88e4-7c9dde7fe6e9	nextflow run main.nf
 2020-05-12 11:40:11	42m 27s	pedantic_mayer	OK	b6e7ff50eb42248801e7215bf21e5085	300edd7e-e702-43a4-95ca-e744ee120683	nextflow run main.nf
+2020-05-12 12:38:54	-	kickass_caravaggio	-	4b1550761c149b18a0e05b1903aead50	6c9efb81-3f1a-4557-afe7-41db42214585	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
