@@ -7,3 +7,27 @@
 2020-05-04 13:54:07	-	deadly_cantor	-	9769bc246948076b55b1791180934d84	355e2cb7-d1c2-4292-88e0-52923fd2f36d	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
 2020-05-04 13:56:48	39.6s	jovial_hamilton	ERR	317aefe65ffa124b4622c9b2af0671a7	e04c68ae-b085-4e38-a58a-385c099e1045	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
 2020-05-04 14:11:23	38.5s	kickass_tesla	ERR	317aefe65ffa124b4622c9b2af0671a7	18e337aa-997b-43cc-923d-6e702e4e8e87	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-08 09:28:53	-	marvelous_woese	-	fe0c6a69e7a121a3c3b882c5b50dac0a	366e11b2-9f1f-42fc-bd4e-864e3d55a071	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-08 10:53:34	1h 10m 57s	exotic_dalembert	ERR	e686f4a54ab3c0b69842b3b4c7d7fe81	3ebd389d-715b-4837-9d21-e3cdd3f2f9c2	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 10:43:37	24m 4s	exotic_carson	ERR	3e0cfa48a6e68bb4697485f3aa4fa7aa	3ebd389d-715b-4837-9d21-e3cdd3f2f9c2	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa -resume
+2020-05-11 10:50:27	-	nauseous_bell	-	3e0cfa48a6e68bb4697485f3aa4fa7aa	bdb0a704-035d-4afc-babc-8d8243a60258	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 14:40:06	1.9s	extravagant_noether	OK	ff187d40c56380d9e2575ee15d0fd1e3	9855c3e1-fd7b-4ccb-b7ce-8de68b4c094c	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 14:44:45	1.5s	festering_carlsson	OK	ff187d40c56380d9e2575ee15d0fd1e3	34a40379-f880-4b4f-86e8-8f17fdf6f4f6	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 14:46:39	1.7s	romantic_majorana	OK	6e9ca95a2cd9dd6251dd2e44aa3b9085	d3ab97c4-fdfb-467f-87f7-cf8f4126761c	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 14:51:48	-	drunk_gates	-	73ae35e8b1ffc216d45a23e837a9d3be	f6531ceb-c2b3-4f0a-a169-b996eb9943a5	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 14:52:09	-	intergalactic_miescher	-	73ae35e8b1ffc216d45a23e837a9d3be	1808fff3-afa2-4e01-9426-cfc2450f927e	nextflow run main.nf
+2020-05-11 14:52:36	2.2s	friendly_shannon	OK	415c269a5e35abefc67949386e6fae92	00926edd-b212-4140-a3b0-ab4de8a01cf3	nextflow run main.nf
+2020-05-11 15:01:04	1.7s	big_pike	OK	415c269a5e35abefc67949386e6fae92	f7e421bc-5e71-4a0d-a13c-fe9e0fa66eef	nextflow run main.nf
+2020-05-11 15:02:30	1.9s	tiny_bernard	OK	d6db71c7daea6a644453a9aa9dd18172	f3ed4535-debb-4489-9818-058629114425	nextflow run main.nf
+2020-05-11 15:06:19	1.9s	tiny_fourier	OK	91336b46af8b8b253f5d5f01e7a5c57c	5f29bb7f-1159-40be-86d8-f2ae85247bb1	nextflow run main.nf
+2020-05-11 15:10:06	1m 57s	loving_hamilton	OK	c0a9be8aec322b4538e00f2444eb6435	bde2795e-7e94-4ba6-9b22-fa8109037ead	nextflow run main.nf
+2020-05-11 15:16:33	17.9s	infallible_leavitt	OK	1e1b207046a18de570008892c3798f4d	dca75c90-1ef8-411b-91bb-4a695610fe7c	nextflow run main.nf
+2020-05-11 15:20:25	1m 44s	wise_brenner	ERR	f5dab26b21ce41d7d1a3d45967607d06	5c2d5973-3a67-4084-9a7f-45e48cd6d993	nextflow run main.nf --ref_fa /home/Aliki.Zavaropoulou/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa
+2020-05-11 15:26:06	-	jovial_picasso	-	b8e129d839de4b027850ea12aaceaacb	53e0388f-5a5e-4ff9-9487-310ba161fbeb	nextflow run main.nf
+2020-05-11 15:26:47	1.9s	jovial_torvalds	OK	20269d1b857218ddc9d76922abc6d430	401be039-7369-4945-9396-af435140c7cd	nextflow run main.nf
+2020-05-11 15:28:17	1m 22s	pedantic_lamarck	ERR	a0ac13e83e4aac45ed029275e502c9ad	c3027080-23dc-4d25-a54f-8f8c0d544a6f	nextflow run main.nf
+2020-05-11 15:37:15	2m 10s	drunk_nightingale	ERR	a6a31e6e5cad1bfc387c5ec6f26a278e	782edc1a-783a-478c-a182-a2e1869a4ec6	nextflow run main.nf
+2020-05-12 07:29:22	31.4s	pedantic_rosalind	OK	1e1b207046a18de570008892c3798f4d	5ad689fe-d049-42ac-9f07-cde087c15991	nextflow run main.nf
+2020-05-12 07:37:03	19.6s	clever_becquerel	OK	53ffcde3174856a7eb7cb9337285cca6	73f281e4-42eb-429f-ba03-5ef48fac836a	nextflow run main.nf
+2020-05-12 08:24:07	42m 15s	elated_stonebraker	OK	5076fe500c3af3b9e6f64eef9c957ab4	8412d36b-7296-4705-88e4-7c9dde7fe6e9	nextflow run main.nf
+2020-05-12 11:40:11	42m 27s	pedantic_mayer	OK	b6e7ff50eb42248801e7215bf21e5085	300edd7e-e702-43a4-95ca-e744ee120683	nextflow run main.nf

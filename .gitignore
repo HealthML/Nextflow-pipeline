@@ -5,3 +5,4 @@ out*
 work/
 nextflow.html*
 .nextflow/*
+.nextflow/history

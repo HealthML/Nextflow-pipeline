@@ -1,4 +1,5 @@
-params.outputDir = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
+params.outputDir = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline"
+//params.outputDir = "/home/Aliki.Zavaropoulou/pipeline"
 import java.nio.file.Paths
 
 // ~~~~~ START WORKFLOW ~~~~~ //
@@ -48,9 +49,9 @@ Channel
 
 //fam_for_plink2.subscribe { println it }
 
-bed = Paths.get("${params.plink_input}.bed").toString()
-bim = Paths.get("${params.plink_input}.bim").toString()
-fam = Paths.get("${params.plink_input}.fam").toString()
+//bed = Paths.get("${params.plink_input}.bed").toString()
+//bim = Paths.get("${params.plink_input}.bim").toString()
+//fam = Paths.get("${params.plink_input}.fam").toString()
 
 params.pops = "ukb_SPB_50k_exome_seq"
 dir = params.plink_input
@@ -69,6 +70,7 @@ Channel.fromPath("variants/**.vcf").map { item ->
     return([sampleID, item])
 }.set { input_vcfs }
 
+/*
 process download_ref {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache
     // ftp://ftp.ensembl.org/pub/release-99/variation/indexed_vep_cache
@@ -90,13 +92,15 @@ process download_ref {
         )
     """
 }
+
+
 vep_ref_dir.map{ item ->
     def assembly = "GRCh38"
     return([item, assembly])
 }.set{ vep_ref_dir_assembly }
-
+*/
 process pling_1 {
-    publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered", mode: 'copy'
+    publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
 
     input:
     set pop, file(pl_files) from plink_data
@@ -106,7 +110,7 @@ process pling_1 {
     script:
     output_file="ukb_FE_50k_exome_seq_filtered"
 
-     """
+     """ 
         plink2 \
         --bfile $pop \
         --hwe 0.00001 \
@@ -115,14 +119,14 @@ process pling_1 {
      """
 }
 process pling_2 {
-    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf", mode: 'copy'
+    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
 
     input:
     file(pling1) from pling1_results
     file(fam1) from fam_for_plink2
 
     output:
-    file "ukb_FE_50k_exome_seq_filtered.vcf" into pling2_results
+    file "ukb_FE_50k_exome_seq_filtered.vcf.gz" into pling2_results
 
     script:
     output_file="ukb_FE_50k_exome_seq_filtered"
@@ -134,6 +138,8 @@ process pling_2 {
      --recode vcf-iid bgz --out ${output_file}
      """
 }
+
+/*
 process vep {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basic
     tag "${sampleID}"
@@ -170,3 +176,4 @@ process vep {
     --vcf
     """
 }
+*/
