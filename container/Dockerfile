@@ -1,12 +1,13 @@
 # NGS580 container for making reports with R 3.4.3
 FROM ubuntu:18.04
 
-MAINTAINER Stephen M. Kelly
+MAINTAINER Alva James
 
 # ~~~~~ BASIC SETUP ~~~~~ #
 RUN apt-get update && \
 apt-get install -y wget \
-bzip2
+bzip2 \
+tabix
 
 # ~~~~~ MINICONDA ~~~~~ #
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-4.4.10-Linux-x86_64.sh && \
@@ -18,3 +19,6 @@ ENV PATH="/conda/bin:${PATH}"
 RUN conda install -y -c bioconda \
 ensembl-vep=99.0 \
 gatk4=4.0.5.1
+
+# ~~~~~~ PLINK2 ~~~~#
+RUN conda install -c bioconda plink2
