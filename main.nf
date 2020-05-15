@@ -1,5 +1,4 @@
-params.outputDir = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline"
-//params.outputDir = "/home/Aliki.Zavaropoulou/pipeline"
+params.outputDir = "/home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
 import java.nio.file.Paths
 
 // ~~~~~ START WORKFLOW ~~~~~ //
@@ -49,9 +48,13 @@ Channel
 
 //fam_for_plink2.subscribe { println it }
 
-//bed = Paths.get("${params.plink_input}.bed").toString()
-//bim = Paths.get("${params.plink_input}.bim").toString()
-//fam = Paths.get("${params.plink_input}.fam").toString()
+Channel
+    .fromFilePairs("${params.plink_input}/ukb_SPB_50k_exome_seq.{bed,bim,fam}",size:3) {
+        file -> file.baseName
+    }
+    .filter { key, files -> key in params.pops }
+    .set { plink_data }
+
 
 params.pops = "ukb_SPB_50k_exome_seq"
 dir = params.plink_input
@@ -65,11 +68,12 @@ Channel
 
 // plink_data.subscribe { println "$it" }
 
-Channel.fromPath("variants/**.vcf").map { item ->
+Channel.fromPath("${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf/**.vcf").map { item ->
     def sampleID = "${item.getName()}".replaceFirst(/.vcf$/, "")
     return([sampleID, item])
 }.set { input_vcfs }
 
+//input_vcfs.subscribe { println () }
 
 process download_ref {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache
@@ -92,8 +96,6 @@ process download_ref {
         )
     """
 }
-
-
 vep_ref_dir.map{ item ->
     def assembly = "GRCh38"
     return([item, assembly])
@@ -110,7 +112,7 @@ process pling_1 {
     script:
     output_file="ukb_FE_50k_exome_seq_filtered"
 
-     """ 
+     """
         plink2 \
         --bfile $pop \
         --hwe 0.00001 \
@@ -126,7 +128,7 @@ process pling_2 {
     file(fam1) from fam_for_plink2
 
     output:
-    file "ukb_FE_50k_exome_seq_filtered.vcf.gz" into pling2_results
+    file "ukb_FE_50k_exome_seq_filtered.vcf" into pling2_results
 
     script:
     output_file="ukb_FE_50k_exome_seq_filtered"
@@ -136,21 +138,21 @@ process pling_2 {
      --bfile "${params.outputDir}/ukb_FE_50k_exome_seq_filtered/ukb_FE_50k_exome_seq_filtered" \
      --keep-fam ${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt \
      --recode vcf-iid bgz --out ${output_file}
+     gunzip ${output_file}.vcf.gz
      """
 }
 
-/*
 process vep {
-    // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basic
+
+    // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
     tag "${sampleID}"
-    publishDir "${params.outputDir}/VEP/raw", mode: 'copy'
+    publishDir "${params.outputDir}/VEP"
 
     input:
-    set val(sampleID), file(vcf), file(ref_dir), val(assembly), file(refFasta),file(GTF),file(GTF_tbi) from input_vcfs.combine(vep_ref_dir_assembly)
+    set val(sampleID),file(vcf), file(ref_dir), val(assembly), file(refFasta), file(GTF), file(GTF_tbi) from input_vcfs.combine(vep_ref_dir_assembly)
         .combine(ref_fa)
         .combine(gtf)
         .combine(gtf_tbi)
- 
 
     output:
     set val(sampleID), file("${output_file}") into vcf_annotated
@@ -158,12 +160,13 @@ process vep {
 
     script:
     prefix = "${sampleID}"
-    output_file = "${prefix}.vep.vcf"
-    output_html = "${vcf}".replaceFirst(/.vcf$/, ".vep.vcf_summary.html")
+    output_file = "${prefix}.vep.txt"
+    output_html = "${vcf}".replaceFirst(/.vcf$/, ".vep.txt_summary.html")
+
     """
     vep \
     --offline \
-    --cache \
+    --cache  \
     --dir "${ref_dir}" \
     --assembly "${assembly}" \
     --fasta "${refFasta}" \
@@ -171,9 +174,10 @@ process vep {
     --force_overwrite \
     --species homo_sapiens \
     -i "${vcf}" \
-    --format vcf \
-    -o "${output_file}" \
-    --vcf
+    --stats_file "${output_html}" \
+    --tab \
+    -o stdout | \
+    filter_vep -filter "Consequence is stop_lost or Consequence is start_lost or Consequence is splice_donor_variant or Consequence is frameshift_variant or Consequence is splice_acceptor_variant or Consequence is stop_gained" \
+    -o "${output_file}"
     """
 }
-*/
