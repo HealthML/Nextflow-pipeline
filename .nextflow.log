@@ -1,0 +1,78 @@
+Apr-21 19:57:19.358 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf --ref_fa /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa --gtf /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.97.gtf.gz --gtf_tbi /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.97.gtf.gz.tbi
+Apr-21 19:57:19.485 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 19.01.0
+Apr-21 19:57:19.494 [main] INFO  nextflow.cli.CmdRun - Launching `main.nf` [kickass_mendel] - revision: f759a0a38e
+Apr-21 19:57:19.505 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/Alva.Rani/scripts/test_next/vep_nextflow/nextflow.config
+Apr-21 19:57:19.505 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/Alva.Rani/scripts/test_next/vep_nextflow/nextflow.config
+Apr-21 19:57:19.523 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Apr-21 19:57:19.873 [main] DEBUG nextflow.Session - Session uuid: 93bf27c5-b3c3-4d35-89bc-5f289ca8b95e
+Apr-21 19:57:19.873 [main] DEBUG nextflow.Session - Run name: kickass_mendel
+Apr-21 19:57:19.874 [main] DEBUG nextflow.Session - Executor pool size: 8
+Apr-21 19:57:19.897 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 19.01.0 build 5050
+  Modified: 22-01-2019 11:19 UTC 
+  System: Linux 4.15.0-76-generic
+  Runtime: Groovy 2.5.5 on OpenJDK 64-Bit Server VM 11.0.6+10-post-Ubuntu-1ubuntu118.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 3752@vm-rani [127.0.1.1]
+  CPUs: 8 - Mem: 31.4 GB (10.4 GB) - Swap: 1.9 GB (1.7 GB)
+Apr-21 19:57:19.917 [main] DEBUG nextflow.Session - Work-dir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work [ext2/ext3]
+Apr-21 19:57:19.917 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /home/Alva.Rani/scripts/test_next/vep_nextflow/bin
+Apr-21 19:57:20.007 [main] DEBUG nextflow.Session - Session start invoked
+Apr-21 19:57:20.010 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Apr-21 19:57:20.010 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /home/Alva.Rani/scripts/test_next/vep_nextflow/trace.txt
+Apr-21 19:57:20.012 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Apr-21 19:57:20.159 [main] WARN  nextflow.Session - There's no process matching config selector: vep
+Apr-21 19:57:20.160 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Apr-21 19:57:20.164 [main] INFO  nextflow.Nextflow - ~~~~~~~ VEP Pipeline ~~~~~~~
+Apr-21 19:57:20.164 [main] INFO  nextflow.Nextflow - * Project dir:        /home/Alva.Rani/scripts/test_next/vep_nextflow
+Apr-21 19:57:20.164 [main] INFO  nextflow.Nextflow - * Launch dir:         /home/Alva.Rani/scripts/test_next/vep_nextflow
+Apr-21 19:57:20.164 [main] INFO  nextflow.Nextflow - * Work dir:           /home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Profile:            standard
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Script name:        main.nf
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Script ID:          f759a0a38e7e73208fbc4c53956beb3c
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Container engine:   docker
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Workflow session:   93bf27c5-b3c3-4d35-89bc-5f289ca8b95e
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Nextflow run name:  kickass_mendel
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Nextflow version:   19.01.0, build 5050 (22-01-2019 11:19 UTC)
+Apr-21 19:57:20.165 [main] INFO  nextflow.Nextflow - * Launch command:
+nextflow run main.nf --ref_fa /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa --gtf /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.97.gtf.gz --gtf_tbi /home/Alva.Rani/vep_data/input/Homo_sapiens.GRCh38.97.gtf.gz.tbi
+
+Apr-21 19:57:20.259 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /home/Alva.Rani/UKbiobank/original/genetics/sequencing/plink_freeze_50K/SPB/; pattern: ukb_SPB_50k_exome_seq.{bed,bim,fam}; options: [:]
+Apr-21 19:57:20.394 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:pling_1` matches process pling_1
+Apr-21 19:57:20.395 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Apr-21 19:57:20.396 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Apr-21 19:57:20.400 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Apr-21 19:57:20.401 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Apr-21 19:57:20.404 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=31.4 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Apr-21 19:57:20.407 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: LocalPollingMonitor
+Apr-21 19:57:20.408 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Apr-21 19:57:20.409 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Apr-21 19:57:20.430 [main] DEBUG nextflow.Session - >>> barrier register (process: pling_1)
+Apr-21 19:57:20.432 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > pling_1 -- maxForks: 8
+Apr-21 19:57:20.447 [main] DEBUG nextflow.util.CacheHelper - Config settings `withName:pling_2` matches process pling_2
+Apr-21 19:57:20.447 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Apr-21 19:57:20.447 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Apr-21 19:57:20.447 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Apr-21 19:57:20.449 [main] DEBUG nextflow.Session - >>> barrier register (process: pling_2)
+Apr-21 19:57:20.449 [main] DEBUG nextflow.processor.TaskProcessor - Creating operator > pling_2 -- maxForks: 8
+Apr-21 19:57:20.451 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Apr-21 19:57:20.451 [main] DEBUG nextflow.Session - Session await
+Apr-21 19:57:20.569 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Apr-21 19:57:20.573 [Task submitter] INFO  nextflow.Session - [0d/a30784] Submitted process > pling_1 (1)
+Apr-21 20:02:20.626 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 1; name: pling_1 (1); status: RUNNING; exit: -; error: -; workDir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work/0d/a307846e9ba466b8f5cc13e7269ccf]
+Apr-21 20:07:20.672 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 1; name: pling_1 (1); status: RUNNING; exit: -; error: -; workDir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work/0d/a307846e9ba466b8f5cc13e7269ccf]
+Apr-21 20:12:20.745 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 1; name: pling_1 (1); status: RUNNING; exit: -; error: -; workDir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work/0d/a307846e9ba466b8f5cc13e7269ccf]
+Apr-21 20:17:21.114 [Task monitor] DEBUG n.processor.TaskPollingMonitor - !! executor local > tasks to be completed: 1 -- pending tasks are shown below
+~> TaskHandler[id: 1; name: pling_1 (1); status: RUNNING; exit: -; error: -; workDir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work/0d/a307846e9ba466b8f5cc13e7269ccf]
+Apr-21 20:19:11.201 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: pling_1 (1); status: COMPLETED; exit: 6; error: -; workDir: /home/Alva.Rani/scripts/test_next/vep_nextflow/work/0d/a307846e9ba466b8f5cc13e7269ccf]
+Apr-21 20:19:11.272 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'pling_1 (1)'
+
+Caused by:
+  Process `pling_1 (1)` terminated with an error exit status (6)
+
+Command executed:
+
+  plink2         --bfile ukb_SPB_50k_exome_seq         --hwe 0.00001         --make-bed         --out ukb_
