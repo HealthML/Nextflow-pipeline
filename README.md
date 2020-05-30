@@ -1,5 +1,5 @@
 # Nextflow-pipeline
-Pipeline for annotating variants in .vcf files using Variant Effect Predictor (VEP).
+Pipeline for annotating variants in `.vcf` files using Variant Effect Predictor (VEP).
 
 # Installation
 ```
