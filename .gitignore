@@ -6,3 +6,4 @@ work/
 nextflow.html*
 .nextflow/*
 .nextflow/history
+/seak_call/ensembl_vep_necessary/*

@@ -1,4 +1,4 @@
-params.outputDir = "/home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/test"
+params.outputDir = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline"
 import java.nio.file.Paths
 
 // ~~~~~ START WORKFLOW ~~~~~ //
@@ -102,7 +102,8 @@ vep_ref_dir.map{ item ->
 }.set{ vep_ref_dir_assembly }
 
 process pling_1 {
-    publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
+    //publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
+    storeDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
 
     input:
     set pop, file(pl_files) from plink_data
@@ -120,8 +121,10 @@ process pling_1 {
         --out ${output_file} \
      """
 }
+
 process pling_2 {
-    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
+    //publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
+    storeDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
 
     input:
     file(pling1) from pling1_results
@@ -141,7 +144,7 @@ process pling_2 {
      gunzip ${output_file}.vcf.gz
      """
 }
-
+/*
 process vep {
 
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
@@ -179,5 +182,27 @@ process vep {
     -o stdout | \
     filter_vep -filter "Consequence is stop_lost or Consequence is start_lost or Consequence is splice_donor_variant or Consequence is frameshift_variant or Consequence is splice_acceptor_variant or Consequence is stop_gained" \
     -o "${output_file}"
+    """
+}
+*/
+
+process filter_vep_for_seak {
+    publishDir "${params.outputDir}/seaktsv"
+
+    input:
+    //set val(sampleID), file(vcf_vep) from vcf_annotated
+    file(pling2_vcf) from pling2_results
+
+    output:
+    file "LOF_filtered.tsv"  into vcf_filtered
+
+    script:
+    output_file="/home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/ensembl_vep_necessary/LOF_filtered.tsv"
+
+    // awk '$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf
+    """
+    python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/filter_VEP.py \
+    -i "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"   \
+    -o ${output_file}
     """
 }
