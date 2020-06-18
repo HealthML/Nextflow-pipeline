@@ -197,12 +197,15 @@ process filter_vep_for_seak {
     file "LOF_filtered.tsv"  into vcf_filtered
 
     script:
-    output_file="/home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/ensembl_vep_necessary/LOF_filtered.tsv"
+    output_file = "LOF_filtered.tsv"
 
     // awk '$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf
     """
     python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/filter_VEP.py \
-    -i "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"   \
-    -o ${output_file}
+    -i "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf" \
+    -o "${output_file}"
     """
 }
+
+// -i "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"   \
+// -o ${output_file}

@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", help="input file name", default = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf', type = str)
-    parser.add_argument("-o", help="output file name", default = '/home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/ensembl_vep_necessary/LOF_filtered.tsv', type = str)
+    parser.add_argument("-o", help="output file name", default = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/seaktsv/LOF_filtered.tsv', type = str)
     args = parser.parse_args()
 
     # Call main routine

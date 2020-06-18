@@ -18,3 +18,9 @@ ENV PATH="/conda/bin:${PATH}"
 RUN conda install -y -c bioconda \
 ensembl-vep=99.0 \
 gatk4=4.0.5.1
+
+# ~~~~~ OTHER PYTHON PACKAGES ~~~~~ #
+RUN conda install --yes \
+    numpy \
+    pandas \
+    cython
