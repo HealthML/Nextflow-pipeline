@@ -80,5 +80,48 @@ dependencies:
   - zeromq=4.3.2=he1b5a44_2
   - zipp=3.1.0=py_0
   - zlib=1.2.11=h7b6447c_3
-
-
+  - pip:
+    - appdirs==1.4.4
+    - backports-tempfile==1.0
+    - backports-weakref==1.0.post1
+    - bgen-reader==4.0.4
+    - cachetools==4.1.0
+    - cffi==1.14.0
+    - chardet==3.0.4
+    - cloudpickle==1.4.1
+    - cycler==0.10.0
+    - dask==2.18.1
+    - deprecated==1.2.10
+    - dill==0.3.2
+    - fsspec==0.7.4
+    - h5py==2.10.0
+    - idna==2.9
+    - joblib==0.15.1
+    - kiwisolver==1.2.0
+    - matplotlib==3.2.2
+    - more-itertools==8.4.0
+    - pandas-plink==2.0.4
+    - partd==1.1.0
+    - patsy==0.5.1
+    - pluggy==0.13.1
+    - psutil==5.7.0
+    - py==1.8.2
+    - pycparser==2.20
+    - pyreadr==0.2.9
+    - pysnptools==0.4.19
+    - pytest==5.4.3
+    - pytest-runner==5.2
+    - requests==2.24.0
+    - scikit-learn==0.23.1
+    - scipy==1.5.0rc2
+    - seak==0.0.0
+    - statsmodels==0.11.1
+    - texttable==1.6.2
+    - threadpoolctl==2.1.0
+    - toolz==0.10.0
+    - tqdm==4.46.1
+    - urllib3==1.25.9
+    - wrapt==1.12.1
+    - xarray==0.15.1
+    - zstandard==0.14.0
+prefix: /home/Aliki.Zavaropoulou/miniconda3/envs/py3

@@ -24,3 +24,6 @@ RUN conda install --yes \
     numpy \
     pandas \
     cython
+
+#COPY /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak seak/
+# The <src> path must be inside the context of the build; you cannot ADD ../something /something, because the first step of a docker build is to send the context directory (and subdirectories) to the docker daemon.
