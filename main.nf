@@ -145,7 +145,7 @@ process pling_2 {
      gunzip ${output_file}.vcf.gz
      """
 }
-/*
+
 process vep {
 
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
@@ -186,14 +186,14 @@ process vep {
     """
 }
 
-*/
+
 process seak_analysis {
     publishDir "${params.outputDir}/seaktsv"
     conda '/home/Aliki.Zavaropoulou/miniconda3/envs/py3'
 
     input:
-    // set val(sampleID), file(vcf_vep) from vcf_annotated
-    file(pling2_vcf) from pling2_results
+    set val(sampleID), file(vcf_vep) from vcf_annotated
+    // file(pling2_vcf) from pling2_results
 
     output:
     file "LOF_filtered.tsv"  into vcf_filtered
@@ -201,7 +201,7 @@ process seak_analysis {
     script:
     filtered_VEP = "LOF_filtered.tsv"
     intermediate_vcf = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"
-    //target_phenotype = 'ApoA'
+    //target_phenotype = 'ApoA'   ${vcf_vep}$   /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf
     """
     awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
     python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/filter_VEP.py \
@@ -214,31 +214,3 @@ process seak_analysis {
 }
 // awk '\$NF ~ /IMPACT=HIGH/' $vcf_vep > ${intermediate_vcf}
 // to install seak library: cd seak_call   (new line)   git clone https://github.com/HealthML/seak.git   (new line)   python setup.py install
-/*
-
-*** put it back:
-awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
-python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/filter_VEP.py \
--i "${intermediate_vcf}" \
--o "${filtered_VEP}"
-****
-
-process seak_applied {
-    publishDir "${params.outputDir}/seaktsv"
-
-    input:
-    file(lof) from vcf_filtered.combine(prt_script)
-
-    output:
-    file(something) into seak_result
-
-    script:
-    //target_phenotype = 'ApoA'
-    """
-    python ${prt_script}\
-    -pheno 'ApoA' \
-    -i 'LOF_filtered.tsv'
-    """
-}
-// /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak_call/seak/run_test_proteinlof.py
-*/
