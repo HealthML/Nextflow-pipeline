@@ -1,0 +1,36 @@
+PLINK v2.00a2LM AVX2 Intel (20 Oct 2019)
+Options in effect:
+  --dummy 50 100 0.01 0 acgt scalar-pheno
+  --make-bed
+  --out /home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous
+
+Hostname: vm-cpu01
+Working directory: /home/Pia.Rautenstrauch
+Start time: Mon Dec  2 15:50:28 2019
+
+Random number seed: 1575301828
+128932 MiB RAM detected; reserving 64466 MiB for main workspace.
+Using up to 24 threads (change this with --threads).
+Dummy data (50 samples, 100 SNPs) written to
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous-temporary.pgen
++
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous-temporary.pvar
++
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous-temporary.psam
+.
+50 samples (50 females, 0 males; 50 founders) loaded from
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous-temporary.psam.
+100 variants loaded from
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous-temporary.pvar.
+1 quantitative phenotype loaded (50 values).
+Writing
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous.fam
+... done.
+Writing
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous.bim
+... done.
+Writing
+/home/Pia.Rautenstrauch/github_repos/ws1920_master_thesis/dummy_data/full_rank_continuous.bed
+... done.
+
+End time: Mon Dec  2 15:50:29 2019
