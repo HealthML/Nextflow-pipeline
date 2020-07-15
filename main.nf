@@ -103,23 +103,24 @@ vep_ref_dir.map{ item ->
 }.set{ vep_ref_dir_assembly }
 
 process pling_1 {
-    //publishDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
-    storeDir "${params.outputDir}/ukb_FE_50k_exome_seq_filtered"
+    //publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
+    storeDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
 
     input:
     set pop, file(pl_files) from plink_data
+
     output:
-    file "ukb_FE_50k_exome_seq_filtered.{bed,fam,bim}" into pling1_results
+    file "ukb_SPB_50k_exome_seq_filtered.{bed,fam,bim}" into pling1_results
 
     script:
-    output_file="ukb_FE_50k_exome_seq_filtered"
+    output_file="ukb_SPB_50k_exome_seq_filtered"
 
      """
-        plink2 \
-        --bfile $pop \
-        --hwe 0.00001 \
-        --make-bed \
-        --out ${output_file} \
+     plink2 \
+     --bfile $pop \
+     --hwe 0.00001 \
+     --make-bed \
+     --out ${output_file} \
      """
 }
 
@@ -132,60 +133,55 @@ process pling_2 {
     file(fam1) from fam_for_plink2
 
     output:
-    file "ukb_FE_50k_exome_seq_filtered.vcf" into pling2_results
+    file "ukb_SPB_50k_exome_seq_filtered.vcf.gz" into pling2_results
 
     script:
-    output_file="ukb_FE_50k_exome_seq_filtered"
+    output_file="ukb_SPB_50k_exome_seq_filtered"
+    base       = pling1[0].baseName
 
      """
      plink2 \
-     --bfile "${params.outputDir}/ukb_FE_50k_exome_seq_filtered/ukb_FE_50k_exome_seq_filtered" \
+     --bfile $base \
      --keep-fam ${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt \
      --recode vcf-iid bgz --out ${output_file}
-     gunzip ${output_file}.vcf.gz
      """
 }
 
 process vep {
-
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
     tag "${sampleID}"
+    //publishDir "${params.outputDir}/VEP"
     storeDir "${params.outputDir}/VEP"
 
     input:
-    set val(sampleID),file(vcf), file(ref_dir), val(assembly), file(refFasta), file(GTF), file(GTF_tbi) from input_vcfs.combine(vep_ref_dir_assembly)
-        .combine(ref_fa)
+        set file(ref_dir), val(assembly), file(refFasta), file(GTF), file(GTF_tbi) from vep_ref_dir_assembly.combine(ref_fa)
         .combine(gtf)
         .combine(gtf_tbi)
+         file(vcf) from pling2_results
 
     output:
-    set val(sampleID), file("${output_file}") into vcf_annotated
-    file("${output_html}")
+     file("${output_file}") into vcf_annotated
+     file("${output_html}")
 
     script:
-    prefix = "${sampleID}"
-    output_file = "${prefix}.vep.txt"
-    output_html = "${vcf}".replaceFirst(/.vcf$/, ".vep.txt_summary.html")
+  //  prefix = "${sampleID}"
+    output_file = "ukb_SPB.vep.vcf"
+    output_html = "ukb_SPB.vep.vcf_summary.html"
 
     """
     vep \
-    --offline \
-    --cache  \
+    --fasta "${refFasta}" \
+    --format vcf --force_overwrite \
     --dir "${ref_dir}" \
     --assembly "${assembly}" \
-    --fasta "${refFasta}" \
     --gtf "${GTF}" \
     --force_overwrite \
     --species homo_sapiens \
-    -i "${vcf}" \
+    --input_file ${vcf} \
     --stats_file "${output_html}" \
-    --tab \
-    -o stdout | \
-    filter_vep -filter "Consequence is stop_lost or Consequence is start_lost or Consequence is splice_donor_variant or Consequence is frameshift_variant or Consequence is splice_acceptor_variant or Consequence is stop_gained" \
-    -o "${output_file}"
+    --output_file "${output_file}"
     """
 }
-
 
 process seak_analysis {
     publishDir "${params.outputDir}/seaktsv"
@@ -202,8 +198,10 @@ process seak_analysis {
     filtered_VEP = "LOF_filtered.tsv"
     intermediate_vcf = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"
     //target_phenotype = 'ApoA'   ${vcf_vep}$   /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf
+    //awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
     """
-    awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
+    awk '\$NF ~ /IMPACT=HIGH/' ${vcf_vep} > ${intermediate_vcf}
+
     python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/filter_VEP.py \
     -i "${intermediate_vcf}" \
     -o "${filtered_VEP}"
