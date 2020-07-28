@@ -17,7 +17,7 @@ import numpy as np
 import argparse
 import os
 import sys
-import src.seak.data_loaders
+#import src.seak.data_loaders
 #temporary way to load the seak library until it is available in pip
 # sys.path.insert(0, '/home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/src/seak')
 # import data_loaders

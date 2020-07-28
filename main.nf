@@ -185,10 +185,10 @@ process vep {
 
 process seak_analysis {
     publishDir "${params.outputDir}/seaktsv"
-    conda '/home/Aliki.Zavaropoulou/miniconda3/envs/py3'
+    // conda '/home/Aliki.Zavaropoulou/miniconda3/envs/py3'
 
     input:
-    set val(sampleID), file(vcf_vep) from vcf_annotated
+    file(vcf_vep) from vcf_annotated
     // file(pling2_vcf) from pling2_results
 
     output:
@@ -196,16 +196,19 @@ process seak_analysis {
 
     script:
     filtered_VEP = "LOF_filtered.tsv"
-    intermediate_vcf = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvariants.vep.vcf"
+    intermediate_vcf = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvar.vep.vcf"
     //target_phenotype = 'ApoA'   ${vcf_vep}$   /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf
     //awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
+    // awk '\$NF ~ /IMPACT=HIGH/' ${vcf_vep} > ${intermediate_vcf}
+    // awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/paok.vep.vcf
+
     """
     awk '\$NF ~ /IMPACT=HIGH/' ${vcf_vep} > ${intermediate_vcf}
 
-    python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/filter_VEP.py \
+    python /filter_VEP.py \
     -i "${intermediate_vcf}" \
     -o "${filtered_VEP}"
-    python /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak/run_test_proteinlof.py \
+    python /run_test_proteinlof.py \
     -pheno 'ApoA' \
     -i "${filtered_VEP}"
     """
