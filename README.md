@@ -32,3 +32,13 @@ If you can access the VM server and the above mentioned folder, there is index f
 Otherwise, you can also run the whole pipeline by using the following one liner,
 
 `./nextflow run main.nf`
+
+
+# About the pipeline steps
+
+The flow of the tasks is encoded in processes, which are executed in the same oder as they appear in main.nf top to down.
+Firstly, process download_ref downloads automatically the human reference genome hg38 fasta file from the webpage Ensembl.
+Secondly, process pling_1 uses the tool PLINK and takes as input SNP data given in .bed, .bim, .fam format and processes those according to quality control criteria according to Hardy-Weinberg equilibrium.
+Thirdly, process pling_2 uses the tool PLINK and takes as input the processed SNP data and excludes samples from the pipeline given a .txt file. The output is a zipped vcf file.
+In the fourth place, process vep uses the tool VEP and takes as input the vcf file combining files for the annotation and indexing of the reference genome. Output is the functional annotation of variants.
+In the fifth place, process seak_analysis performs genotype-phenotype association test using kernel functions applying the package seak available in python. Here, the output of the process vcf has to be transformed into a specific format. Afterwards comes the association test on a user-selected phenotype and the beforehand produced functional annotation.
