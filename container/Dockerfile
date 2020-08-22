@@ -9,10 +9,7 @@ RUN apt-get update && \
     bzip2 \
     tabix \
     unzip  \
-<<<<<<< HEAD
-    curl
-=======
-    curl  \
+    curl \
     gcc  \
     g++  \
     build-essential  \
@@ -20,7 +17,6 @@ RUN apt-get update && \
     libevent-dev \
     git  
     
->>>>>>> dev_nf
 
 # ~~~~~ MINICONDA ~~~~~ #
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-4.4.10-Linux-x86_64.sh && \
@@ -31,7 +27,6 @@ ENV PATH="/conda/bin:${PATH}"
 # ~~~~~ VEP & SEAK-libraries~~~~~ #
 RUN conda install -y -c bioconda \
     ensembl-vep=99.0 \
-<<<<<<< HEAD
     gatk4=4.0.5.1
 
 ENV PLINK_VERSION v2.00a2.3LM
@@ -41,7 +36,6 @@ ENV PLINK_DIR /opt/plink2
 # ~~~~~~ PLINK2 ~~~~#
 RUN curl http://s3.amazonaws.com/plink2-assets/alpha2/plink2_linux_x86_64.zip -o $PLINK_ZIP \
     && mkdir $PLINK_DIR \
-=======
     gatk4=4.0.5.1 \
     numpy \
     pandas \
@@ -72,17 +66,14 @@ ENV PLINK_DIR /opt/plink2
 
 RUN curl http://s3.amazonaws.com/plink2-assets/alpha2/plink2_linux_x86_64.zip -o $PLINK_ZIP \
     && mkdir -p $PLINK_DIR \
->>>>>>> dev_nf
     && unzip $PLINK_ZIP -d $PLINK_DIR \
     && rm $PLINK_ZIP
 
 RUN cd /usr/local/bin \
     && ln -s $PLINK_DIR/plink2 plink2
 
-<<<<<<< HEAD
 
 =======
->>>>>>> dev_nf
 # We will define plink2 as the application to run when this container starts
 ENTRYPOINT ["plink2"]
 

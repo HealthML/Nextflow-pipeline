@@ -121,7 +121,6 @@ vep_ref_dir.map{ item ->
 
 
 process pling_1 {
-<<<<<<< HEAD
     publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
 
     input:
@@ -129,24 +128,19 @@ process pling_1 {
 
     output:
     file "ukb_SPB_50k_exome_seq_filtered.{bed,fam,bim}" into pling1_results
-=======
   //  publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
     publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered", mode: 'link'
 
     input:
     set pop, file(pl_files) from plink_data
->>>>>>> dev_nf
 
     output:
    // file "${pop}_filtered.{bed,fam,bim}" into pling1_results
    set file("${pop}_filtered.bed"), file("${pop}_filtered.bim"), file("${pop}_filtered.fam") into pling1_results
     script:
-<<<<<<< HEAD
     output_file="ukb_SPB_50k_exome_seq_filtered"
-=======
     output_file = "${pop}_filtered"
     base        = pl_files[0].baseName
->>>>>>> dev_nf
 
         """
         plink2 \
@@ -175,7 +169,6 @@ process pling_2 {
      //file(fam1) from fam_for_plink2
 
     output:
-<<<<<<< HEAD
     file "ukb_SPB_50k_exome_seq_filtered.vcf.gz" into pling2_results
 
     script:
@@ -185,7 +178,6 @@ process pling_2 {
      """
      plink2 \
      --bfile $base \
-=======
     file("${pop1}.vcf.gz") into pling2_results
    //file ("${output_file}") into pling2_results
 
@@ -198,13 +190,11 @@ process pling_2 {
      """
      plink2 \
      --bfile $pop1  \
->>>>>>> dev_nf
      --keep-fam ${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt \
      --recode vcf-iid bgz --out ${output_file}
      """
 }
 process vep {
-<<<<<<< HEAD
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
     tag "${sampleID}"
     publishDir "${params.outputDir}/VEP"
@@ -236,7 +226,6 @@ process vep {
     --input_file ${vcf} \
     --stats_file "${output_html}" \
     --output_file "${output_file}"
-=======
           // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
           tag "Runing VEP on $vcf"
           // publishDir "${params.outputDir}/VEP"
@@ -301,7 +290,6 @@ process seak_analysis_1 {
     python /filter_VEP.py \
       -i ${intermediate_vcf}_filteredvar.vep.vcf \
       -o ${filtered_VEP}
->>>>>>> dev_nf
     """
 }
 
