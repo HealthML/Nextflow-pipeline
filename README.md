@@ -1,7 +1,7 @@
 # Nextflow-pipeline
-Pipeline for annotating variants in .vcf files using Variant Effect Predictor (VEP).
+Pipeline for annotating variants in `.vcf` files using Variant Effect Predictor (VEP).
 
-# Installtaion
+# Installation
 ```
 git clone https://github.com/HealthML/Nextflow-pipeline.git
 cd Nextflow-pipeline
