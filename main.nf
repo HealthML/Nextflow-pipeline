@@ -18,8 +18,8 @@ Sipt name      : ${workflow.scriptName ?: '-'}
 Launch command: \n${workflow.commandLine}\n
       """
 .stripIndent()
+//docker.runOptions = '-u $(id -u):$(id -g)'
 
-params.pops      = ["ukb_SPB_50k_exome_seq","ukb_FE_50k_exome_seq"]
 Channel.fromPath( file(params.ref_fa) )
 .into{ ref_fa;
     ref_fa2
@@ -53,9 +53,8 @@ Channel
 
 //fam_for_plink2.subscribe { println it }
 
-
 Channel
-    .fromFilePairs("${params.dir}/{ukb_SPB_50k_exome_seq,ukb_FE_50k_exome_seq}.{bed,bim,fam}",size:3) {
+    .fromFilePairs("${params.dir}/${params.pops}.{bed,bim,fam}",size:3) {
         file -> file.baseName
     }
     .filter { key, files -> key in params.pops }
@@ -97,7 +96,7 @@ vep_ref_dir.map{ item ->
 
 process pling_1 {
   //  publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
-    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered"
+    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered", mode: 'link'
 
     input:
     set pop, file(pl_files) from plink_data
@@ -118,9 +117,8 @@ process pling_1 {
      """
 }
 
-
 pling1_results
-    .collect()
+   .collect()
    .flatten()
     .map { file -> tuple(file.baseName, file)}
     .groupTuple(by: 0)
@@ -129,7 +127,7 @@ pling1_results
 
 process pling_2 {
     // publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
-    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf"
+    publishDir "${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf", mode:'copy'
 
     input:
     //set file(bed), file(bim), file(fam) from pling1_results.view()
@@ -155,52 +153,49 @@ process pling_2 {
 }
 
 process vep {
-    // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
-    tag "Runing VEP on $vcf"
-    // publishDir "${params.outputDir}/VEP"
-    publishDir "${params.outputDir}/VEP"
+          // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
+          tag "Runing VEP on $vcf"
+          // publishDir "${params.outputDir}/VEP"
+          publishDir "${params.outputDir}/VEP",mode:'copy'
 
-    input:
-        set file(ref_dir), val(assembly), file(refFasta), file(GTF), file(GTF_tbi),file(vcf) from vep_ref_dir_assembly.combine(ref_fa)
-        .combine(gtf)
-        .combine(gtf_tbi)
-        .combine(pling2_results).view()
+          input:
+              set file(ref_dir), val(assembly),file(vcf) from vep_ref_dir_assembly.combine(pling2_results)
 
+          output:
+          file("${output_file}") into vcf_annotated
+          file("${output_html}")
 
-    output:
-    file("${output_file}") into vcf_annotated
-    file("${output_html}")
+script:
+          // prefix    = "${sampleID}"
+          //output_file = "ukb_SPB.vep.vcf"
+          //output_html = "ukb_SPB.vep.vcf_summary.html"
+  base          = vcf.baseName
+  output_file   = "${base}.vep.vcf"
+  output_html   = "${base}_summary.html"
 
-    script:
-    // prefix    = "${sampleID}"
-    //output_file = "ukb_SPB.vep.vcf"
-    //output_html = "ukb_SPB.vep.vcf_summary.html"
-    base          = vcf.baseName
-    output_file   = "${base}.vep.vcf"
-    output_html   = "${base}_summary.html"
+  """
+  vep \
+  -- cache \
+  --format vcf \
+  --offline \
+  --dir "${ref_dir}" \
+  --assembly "${assembly}" \
+  --force_overwrite \
+  --species homo_sapiens \
+  --input_file ${base}.gz \
+  --sift b \
+  --polyphen b \
+  --stats_file "${output_html}" \
+  --output_file "${output_file}"
+  """
+    }
 
-    """
-    vep \
-    --fasta "${refFasta}" \
-    --format vcf --force_overwrite \
-    --dir "${ref_dir}" \
-    --assembly "${assembly}" \
-    --gtf "${GTF}" \
-    --force_overwrite \
-    --species homo_sapiens \
-    --input_file ${base}.gz \
-    --sift b \
-    --polyphen b \
-    --stats_file "${output_html}" \
-    --output_file "${output_file}"
-    """
-}
 
 //pling2_results.println { "plink2: $it" }
 
 process seak_analysis_1 {
     tag "Running seak on $intermediate_vcf"
-    publishDir "${params.outputDir}/seaktsv"
+    publishDir "${params.outputDir}/seaktsv", mode:'link'
     // conda '/home/Aliki.Zavaropoulou/miniconda3/envs/py3'
 
     input:
