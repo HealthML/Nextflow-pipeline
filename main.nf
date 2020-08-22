@@ -54,7 +54,6 @@ Channel
 //fam_for_plink2.subscribe { println it }
 
 Channel
-<<<<<<< HEAD
     .fromFilePairs("${params.plink_input}/ukb_SPB_50k_exome_seq.{bed,bim,fam}",size:3) {
         file -> file.baseName
     }
@@ -68,9 +67,7 @@ sampleID= "ukb_SPB_50k_exome_seq"
 
 Channel
     .fromFilePairs("${params.plink_input}/ukb_SPB_50k_exome_seq.{bed,bim,fam}",size:3) {
-=======
     .fromFilePairs("${params.dir}/${params.pops}.{bed,bim,fam}",size:3) {
->>>>>>> dev_nf
         file -> file.baseName
     }
     .filter { key, files -> key in params.pops }
@@ -80,7 +77,6 @@ Channel.fromPath("${params.dir}/**.bed").map{item ->
        def sampleID = "${item.getName()}".replaceFirst(/.bed$/, "")
        return(sampleID)}.set { sampleid }
 
-<<<<<<< HEAD
 params.vcf = "/home/Alva.Rani/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/next"
 Channel.fromPath("${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf/**.vcf").map { item ->
     def sampleID = "${item.getName()}".replaceFirst(/.vcf$/, "")
@@ -88,9 +84,7 @@ Channel.fromPath("${params.outputDir}/ukb_SPB_50k_exome_seq_filtered_vcf/**.vcf"
 }.set { input_vcfs }
 
 //input_vcfs.subscribe { println () }
-=======
 //sampleid.subscribe { println it }
->>>>>>> dev_nf
 
 process download_ref {
         // http://useast.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache
