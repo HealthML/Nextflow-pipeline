@@ -22,8 +22,8 @@ make docker-build
 # How to run the pipeline
 
 
-In order to run the pipeline for the data generated from Regeneron’s own pipeline (SPB) or Functionally
-Equivalent (FE) pipleine using the VEP's cache references. For example, if you wanna run the samples from FE pipeline try the follwoing command on the terminal.
+In order to run the pipeline for the data generated from Regeneron’s own pipeline `(SPB)` or Functionally
+Equivalent `(FE)` pipleine from UKbiobank using the VEP's cache references, please use the following command. For example, if you wanna run the samples from FE pipeline try the follwoing command on the terminal.
 
 `./nextflow run main.nf --samples FE `
 
