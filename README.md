@@ -1,7 +1,7 @@
 # Nextflow-pipeline
 
 The current pipeline analyze the exon-seq data generated from either of Regeneron’s own pipeline `(SPB)` or Functionally
-Equivalent `(FE)` piplines from UKbiobank. Initially, the raw input data (`.bed`,`.fam`, `.bai`) are filtered and converted to vcf files using two `plink2` processes. Then, the variants (`vcf` file) is annotated using the ensembleVariant Effect Predictor (`vep`) tool. The corresponding result is then processed using an in-house tool called SEAK. The pipeline has a total of four processes. The tools used on all processes are containerized in the [docker image ](https://github.com/HealthML/Nextflow-pipeline/blob/master/container/Dockerfile)
+Equivalent `(FE)` piplines from UKbiobank. Initially, the raw input data (`.bed`,`.fam`, `.bai`) are filtered and converted to vcf files using two `plink2` processes. Then, the variants (`vcf` file) are annotated in the third process, using the ensembleVariant Effect Predictor (`vep`) tool. The corresponding result is then processed using an in-house tool called SEAK. The pipeline has a total of four processes. The tools used for all the four processes are containerized in the [docker image ](https://github.com/HealthML/Nextflow-pipeline/blob/master/container/Dockerfile)
 
 
 # Installation
