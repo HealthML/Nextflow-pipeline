@@ -13,8 +13,6 @@ RUN apt-get update && \
     gcc  \
     g++  \
     build-essential  \
-    python-dev \
-    libevent-dev  \
     git
 
 #RUN mkdir testdir/
@@ -40,11 +38,6 @@ RUN pip install -e ./seak
 
 COPY run_test_proteinlof.py ./run_test_proteinlof.py
 COPY filter_VEP.py ./filter_VEP.py
-RUN find . -name "*seak*" -print
-RUN find . -name "*VEP.py" -print
-RUN realpath filter_VEP.py
-RUN find $PWD -type f | grep "filter_VEP.py"
-
 
 
 ENV PLINK_VERSION v2.00a2.3LM
@@ -64,6 +57,5 @@ RUN cd /usr/local/bin \
 # We will define plink2 as the application to run when this container starts
 ENTRYPOINT ["plink2"]
 
-#COPY /home/Aliki.Zavaropoulou/pipeline/Nextflow-pipeline/seak seak/
 # The <src> path must be inside the context of the build; you cannot ADD ../something /something, because the first step of a docker build is to send the context directory (and subdirectories) to the docker daemon.ss
 # Multiple <src> resources may be specified but the paths of files and directories will be interpreted as relative to the source of the context of the build. (relative to the source directory that is being built)

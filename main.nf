@@ -41,6 +41,23 @@ Channel.fromPath( file(params.gtf) )
     gtf2
 }
 
+/*
+Channel.fromPath( file(params.ref_genome) )
+.into{ ref_genome;
+    ref_genome2
+}
+
+Channel.fromPath( file(params.lofpath) )
+.into{ lofpath;
+    lofpath2
+}
+
+Channel.fromPath( file(params.covariatespath) )
+.into{ covariatespath;
+    covariatespath2
+}
+*/
+
 Channel
     .fromPath("${params.fam}/ukb_50k_exome_seq_filtered_for_VEP_ID.txt", checkIfExists:true )
     .ifEmpty { exit 1, "Fam file NOT found: ${params.fam}" }
@@ -150,8 +167,8 @@ process pling_2 {
 process vep {
     // http://useast.ensembl.org/info/docs/tools/vep/script/vep_options.html#basie
     tag "${sampleID}"
-    //publishDir "${params.outputDir}/VEP"
-    storeDir "${params.outputDir}/VEP"
+    publishDir "${params.outputDir}/VEP"
+    //storeDir "${params.outputDir}/VEP"
 
     input:
         set file(ref_dir), val(assembly), file(refFasta), file(GTF), file(GTF_tbi) from vep_ref_dir_assembly.combine(ref_fa)
@@ -189,18 +206,18 @@ process seak_analysis {
 
     input:
     file(vcf_vep) from vcf_annotated
+    //file(ref_genome2)
+    //file(lofpath2)
+    //file(covariatespath2)
     // file(pling2_vcf) from pling2_results
 
     output:
     file "LOF_filtered.tsv"  into vcf_filtered
+    //file "_results.tsv"
 
     script:
     filtered_VEP = "LOF_filtered.tsv"
     intermediate_vcf = "/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/ukb_SPB_filteredvar.vep.vcf"
-    //target_phenotype = 'ApoA'   ${vcf_vep}$   /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf
-    //awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > ${intermediate_vcf}
-    // awk '\$NF ~ /IMPACT=HIGH/' ${vcf_vep} > ${intermediate_vcf}
-    // awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/paok.vep.vcf
 
     """
     awk '\$NF ~ /IMPACT=HIGH/' ${vcf_vep} > ${intermediate_vcf}
@@ -210,8 +227,14 @@ process seak_analysis {
     -o "${filtered_VEP}"
     python /run_test_proteinlof.py \
     -pheno 'ApoA' \
-    -i "${filtered_VEP}"
+    -i "${filtered_VEP}" \
+    -ref "${params.ref_genome}" \
+    -l "${params.lofpath}" \
+    -cov "${params.covariatespath}"
     """
 }
+// -ukbdir "/home/Aliki.Zavaropoulou/UKbiobank"
 // awk '\$NF ~ /IMPACT=HIGH/' $vcf_vep > ${intermediate_vcf}
+// awk '\$NF ~ /IMPACT=HIGH/' /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf > /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/paok.vep.vcf
 // to install seak library: cd seak_call   (new line)   git clone https://github.com/HealthML/seak.git   (new line)   python setup.py install
+// target_phenotype = 'ApoA'   ${vcf_vep}$   /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/vep_ensembl/v2/output/vep/ukb_SPB.vep.vcf

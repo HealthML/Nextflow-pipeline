@@ -42,9 +42,12 @@ def get_args():
     parser.add_argument('-pheno', '--phenotype', type=str, required=True,
                        choices={'ApoA', 'ApoB', 'IGF1', 'CRP'})
     parser.add_argument('-i', '--input', default = 'LOF_filtered.tsv', type = str)
+    parser.add_argument('-ref', '--referencegenome', default = '/mnt/dsets/reference_genomes/ensembl/Homo_sapiens.GRCh38.genes.bed', type = str)
     parser.add_argument('-ukbdir', '--ukbiobankdirectory', default = '/home/Aliki.Zavaropoulou/UKbiobank', type = str)
     parser.add_argument('-g', '--geno', default = '${/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline}/ukb_SPB_50k_exome_seq_filtered', type = str)
-
+    parser.add_argument('-l', '--lofpath', default = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/seaktsv/')
+    parser.add_argument('-o', '--outputpath', default = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/seaktsv/')
+    parser.add_argument('-cov', '--covariatespath', default = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/master_thesis_pia/blood_biochemistry_phenotypes_and_covariates/blood_biochemistry_pheno_and_cov_unrelated_gaussian_quantile_transformed.csv' )
     # parser.add_argument('-chr', '--chromosome', type=str, required=True)
     # parser.add_argument('-minvep', default=0.1, type=float)
     # parser.add_argument('-maxdist', default=150, type=int)
@@ -67,7 +70,7 @@ def main():
     test_type = 'noK'
     drop_non_numeric_chromosomes = True
     max_maf = 0.001
-
+    path_to_regions_UCSC_BED = args.referencegenome
     pheno_short = args.phenotype
 
     short_to_pheno = {'ApoA':'Gaussian_quantile_transform(Apolipoprotein A)', 'ApoB':'Gaussian_quantile_transform(Apolipoprotein B)', 'IGF1': 'Gaussian_quantile_transform(IGF-1)', 'CRP':'Gaussian_quantile_transform(C-reactive protein)'}
@@ -77,11 +80,13 @@ def main():
     experiment = 'noK_unrelated_filtered_protLOF_maf0.001_burden'
 
     # protein LOF variants - here is probably the connection to the VEP procedure (initially: /home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/vep_SPB_out/v2/ensembl_vep/lof_filtered.tsv)
-    ensemblvep_df = pd.read_csv(ukb_dir + '/derived/projects/kernels_VEP/test_pipeline/seaktsv/' + args.input , sep='\t')
+    ensemblvep_df = pd.read_csv(args.lofpath + args.input , sep='\t')
+    #ensemblvep_df = pd.read_csv(ukb_dir + '/derived/projects/kernels_VEP/test_pipeline/seaktsv/' + args.input , sep='\t')
     # ensemblvep_df = pd.read_csv(ukb_dir + '/derived/projects/kernels_VEP/vep_SPB_out/v2/ensembl_vep/' + args.input , sep='\t')
 
     # SNPs we want to test using the whole genome .bed file generated from process pling_1
     path_to_plink_geno_from_pipeline = args.geno    #not used
+    # this variable is defined twice and here it is probably not used
     path_to_plink_geno_files_with_prefix = ukb_dir+ '/derived/projects/kernels_VEP/test_pipeline/ukb_FE_50k_exome_seq_filtered/ukb_FE_50k_exome_seq_filtered'
     plinkloader_G1 = data_loaders.VariantLoaderSnpReader(path_or_bed=path_to_plink_geno_files_with_prefix+'.bed')
 
@@ -92,16 +97,16 @@ def main():
         chrom_to_load = str(chromosome)
 
         # TODO: change the output directory ; changed from './results/experiments/blood_biochemistry/' -> './results/' -> '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/results/'
-        output_prefix = '/home/Aliki.Zavaropoulou/UKbiobank/derived/projects/kernels_VEP/test_pipeline/results/' + experiment + '/' + short_to_dir[pheno_short] + '/' + chrom_to_load
+        output_prefix = args.outputpath + experiment + '/' + short_to_dir[pheno_short] + '/' + chrom_to_load
         os.makedirs(os.path.dirname(output_prefix), exist_ok=True)
 
-        # plink file prefix
+        # plink file prefix - this variable is defined twice
         path_to_plink_geno_files_with_prefix = ukb_dir+ '/derived/projects/kernels_VEP/ukb_SPB_50k_exome_seq_filtered_chr' + chrom_to_load
 
         # protein LOF variants
         ensemblvep_loader = data_loaders.EnsemblVEPLoader(ensemblvep_df['Uploaded_variation'], ensemblvep_df['Location'], ensemblvep_df['Gene'], data=None)
 
-        path_to_covariates = ukb_dir + '/derived/projects/kernels_VEP/master_thesis_pia/blood_biochemistry_phenotypes_and_covariates/blood_biochemistry_pheno_and_cov_unrelated_gaussian_quantile_transformed.csv'
+        path_to_covariates = args.covariatespath
         covariate_column_names = ['Age at recruitment', 'Sex', 'BMI', 'Smoking status', 'PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6', 'PC7', 'PC8', 'PC9', 'PC10']
 
         # SNPs we want to test - TODO: path_to_plink_ ... should be an input in the procedure and in arg.parser
@@ -120,7 +125,7 @@ def main():
         null_model = scoretest.ScoretestNoK(Y, X)
 
         # get regions, set up iterator to loop over
-        path_to_regions_UCSC_BED = '/mnt/dsets/reference_genomes/ensembl/Homo_sapiens.GRCh38.genes.bed'
+        #path_to_regions_UCSC_BED = '/mnt/dsets/reference_genomes/ensembl/Homo_sapiens.GRCh38.genes.bed'
         ucsc_region_loader = data_loaders.BEDRegionLoader(path_to_regions_UCSC_BED=path_to_regions_UCSC_BED, chrom_to_load=chrom_to_load, drop_non_numeric_chromosomes=drop_non_numeric_chromosomes)
 
 
