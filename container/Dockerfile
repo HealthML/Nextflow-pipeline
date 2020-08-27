@@ -15,9 +15,6 @@ RUN apt-get update && \
     build-essential  \
     git
 
-#RUN mkdir testdir/
-#RUN git clone https://github.com/HealthML/seak.git testdir
-
 
 # ~~~~~ MINICONDA ~~~~~ #
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-4.4.10-Linux-x86_64.sh && \
