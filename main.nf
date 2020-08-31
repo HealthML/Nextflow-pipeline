@@ -14,7 +14,7 @@ Container engine: ${workflow.containerEngine?:'-'}
 Nextflow version: ${workflow.nextflow.version}, build ${workflow.nextflow.build} (${workflow.nextflow.timestamp})
 Launch dir      : ${workflow.launchDir}
 Nextflow run name: ${workflow.runName}
-Sipt name      : ${workflow.scriptName ?: '-'}
+Script name      : ${workflow.scriptName ?: '-'}
 Launch command: \n${workflow.commandLine}\n
       """
 .stripIndent()
@@ -60,6 +60,7 @@ Channel
     .filter { key, files -> key in params.samples }
     .set { plink_data }
 
+//plink_data.subscribe { println it }
 
 process download_ref {
         // http://useast.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache
@@ -170,7 +171,8 @@ script:
 
   """
   vep \
-  -- cache \
+  --cache \
+  --database \
   --format vcf \
   --offline \
   --dir "${ref_dir}" \
