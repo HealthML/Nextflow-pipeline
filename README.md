@@ -30,7 +30,7 @@ make docker-build
 In order to run the pipeline for the data generated from Regeneron’s own pipeline `(SPB)` or Functionally
 Equivalent `(FE)` pipleine from UKbiobank using the VEP's cache references, please use the following command. For example, if you wanna run the samples from FE pipeline try the follwoing command on the terminal.
 
-`./nextflow run main.nf --samples FE `
+`./nextflow run main.nf -resume --samples ukb_FE_50k_exome_seq`
 
 The pipeline downloads automatically hg38 fasta file. However, for the current pipeline I am using reference genome (`.fa`), the annoation file (`.gtf`) and their corresponding indexed files (`.fai` & `.tbi` files). For runing the pipeline using these references, please run the following command on the terminal.
 
